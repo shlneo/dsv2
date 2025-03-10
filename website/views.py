@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from .models import User, Server, Channel
+from .models import User, Server, Channel, Chat, Chat_message
 from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
 views = Blueprint('views', __name__)
 
+@login_required
 @views.route('/')
 def home():
     data_user = User.query.filter_by().all()
@@ -15,8 +16,7 @@ def home():
 def login():
     if User.query.count() == 0:  
         users_data = [
-                ('21.04.2005', 'Tw1che.2k@gmail.com', 'Tw1', '+375445531847', generate_password_hash('1234')),
-                ('22.12.2021', 'maxsidorov2017@gmail.com', 'Max', '+375296470299', generate_password_hash('1234'))
+                ('21.04.2005', 'Tw1che.2k@gmail.com', 'Shln', '+375445531847', generate_password_hash('1234'))
             ]
         for user_data in users_data:
                 user = User( 
@@ -29,7 +29,6 @@ def login():
                 db.session.add(user)   
                 db.session.commit()
     return render_template('login.html')
-
 
 @views.route('/sign')
 def sign():
@@ -85,4 +84,18 @@ def server_detail(id):
 @views.route('/chat')
 def chat():
     return render_template('chat.html', user = current_user)
+
+@views.route('/chats')
+def chats():
+    chats = Chat.query.filter_by(user_id = current_user.id).all()
+    return render_template('chats.html', current_user = current_user, chats = chats)
+
+@views.route('/chats/<int:id>')
+def chats_id(id):
+    chats = Chat.query.filter_by(user_id = current_user.id).all()
+    messages = Chat_message.query.filter_by(chat_id = id, user_id = current_user.id).all()
+    return render_template('chats.html', 
+                           current_user = current_user, 
+                           chats = chats,
+                           messages = messages)
 

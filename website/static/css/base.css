@@ -211,7 +211,8 @@ a{
 }
 
 .privat_message_button,
-.logout_button{
+.logout_button,
+.chats_message_button{
     text-align: center;
     align-items: center;
     display: flex;
@@ -226,6 +227,17 @@ a{
     width: 20px;
     height: 20px;
 }
+
+.chats_message_button a{
+    background-color: rgb(0, 255, 191);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+
 
 .logout_button a{
     background-color: rgb(226, 43, 43);
@@ -402,7 +414,93 @@ a{
     top: 0;
     width: calc(100% - 300px - 300px);
     background-color:rgb(53, 53, 53);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: white;
 }
+
+.mes_area_header{
+
+}
+
+.mes_area_body{
+
+}
+
+.mes_area_body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    max-height: 700px; 
+    overflow-y: auto;
+   
+    border-radius: 10px;
+}
+
+.message_oval {
+    max-width: 70%;
+    color: rgb(223, 223, 223);
+    padding: 10px 15px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.4;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-message {
+    align-self: flex-start;
+    background-color: rgba(150, 150, 150, 0.5);
+    border: none;
+}
+
+.bot-message {
+    align-self: flex-end;
+    background: #007bff;
+    color: white;
+}
+
+
+
+
+
+.mes_area_footer form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 20px;
+}
+
+.text_send_mes{
+    width: calc(100% - 40px);
+    border-radius: 10px;
+    margin: 0 20px;
+    margin-left: 0;
+    background-color: rgba(150, 150, 150, 0.5);
+    color: rgb(206, 206, 206);
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+}
+
+.but_kvadro{
+    width: 50px;
+    height: 50px;
+    background-color: blueviolet; 
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.but_kvadro img{
+    width: 40px;
+    height: 40px;
+}
+
 
 .dop_info_area{
     min-height: calc(100vh-50px);

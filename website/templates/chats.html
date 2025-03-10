@@ -1,0 +1,140 @@
+{% extends "intrerf.html" %}
+
+{% block content %}
+
+<div class="right_of_serverheader">
+    <div class="top_header">
+        <div class="top_header_left">
+            <a></a>
+        </div>
+    </div>    
+    <div class="pod_topheader">
+        <div class="chats_header">
+            <div class="dop_chats_header">
+                <div class = "dop_chat" data-show-modal="create_chat">
+                    <a>Create new chat</a>
+                </div>
+            </div>
+            <div class="personal_chats_list">
+                {%for chat in chats%}
+                    <div onclick="location.href='/chats/{{ chat.id }}'" class = "dop_chat">
+                        <a>{{chat.name}} <span style = "padding-left: 5px; font-size: 10px;">{{chat.timestamp}}</span></a>
+                    </div>
+                {%endfor%}
+
+            </div>
+            <div class="mainPrivileges">
+                <div class="acc_info">
+                    <div class="img_acc_info">
+                        <img  class = "" src="{{ url_for('static', filename='img/menu.png')}}" alt="us">
+                    </div>
+                    <div class="acc_type">
+                        <a href="">{{current_user.name}}</a>
+                        <a href="">В сети</a>
+                    </div>
+
+                </div>
+                <div class="privileges_info">
+                    <a>Выйти</a>
+             
+                </div>
+                <div>
+                    
+                </div>
+            </div>  
+        </div>
+        <div class="mes_area">
+            {% if messages %}
+                <div class="mes_area_header"></div>
+        
+                <div class="mes_area_body">
+                    {% for message in messages %}
+                        <div class="message_oval {% if message.user_id %}bot-message{% else %}user-message{% endif %}">
+                            {{ message.content }}
+                        </div>
+                    {% endfor %}
+                </div>
+        
+                <div class="mes_area_footer">
+                    <form method="POST">
+                        <input type="text" name="message" class="text_send_mes" placeholder="Введите сообщение..." required>
+                        <button type="submit" class="but_kvadro"></button>
+                    </form>
+                </div>
+        
+            {% else %}
+                <div class="mes_area_body">Создайте или выбирите существующий чат</div>
+            {% endif %}
+        </div>
+        <div class="dop_info_area">
+            
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+<div id="create_chat" class="modal" data-modal="create_chat">
+    <div class="modalBox" data-modal-box>
+        <a class="modalClose" data-close-modal>&times;</a>
+
+        <div class="modalStep step1 active">
+            <div class="modalHeader">
+                <div class="modalHeaderName">
+                    <a>Создайте свой чат</a>
+                </div>
+            </div>
+            <div class="modalMiddle">
+                <div class="patternbutton" data-choose-template>
+                    <div class="left">
+                        <a>Свой шаблон</a>
+                    </div>
+                    <div class="right">
+                        <a></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modalBottom">
+                <div class="modalBottomName">
+                    <a>У вас уже есть приглашение?</a>
+                </div>
+                <a class="modalBottomButton">Присоединиться к чату</a>
+            </div>
+        </div>
+
+        <!-- Второй шаг -->
+        <div class="modalStep step2">
+            <form action="/create_chat" method="POST">
+                <div class="modalHeader">
+                    <div class="modalHeaderName">
+                        <a>Персонализируйте свой чат</a>
+                    </div>
+                </div>
+                <div class="modalMiddle">
+                    <p>Название чата</p>
+                    <input type="text" name="name" value="Чат {{current_user.name}}">
+                </div>
+                <div class="modalBottom">
+                    <div class="modalBottomContent">
+                        <a data-back>Назад</a>
+                        <button type="submit" class="modalBottomButton" style="width: 100px;">Создать</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>
+
+
+</script>
+
+
+{% endblock %}

@@ -1,18 +1,12 @@
-
 from flask_socketio import SocketIO
-
 from flask import session, Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, current_user, LoginManager, logout_user
-
-
-from .models import User, Server, Channel
+from .models import User, Server, Channel, Chat, Chat_message
 from sqlalchemy import func, or_
 from . import db
-
 from werkzeug.security import check_password_hash, generate_password_hash
 
 auth = Blueprint('auth', __name__)
-
 
 @auth.route('/logout')
 @login_required
@@ -66,25 +60,25 @@ async def create_acc():
             db.session.commit()
 
         return redirect(url_for('views.login'))
-
-@auth.route('/sign_in', methods=['GET', 'POST'])
-async def sign_in():
+    
+@auth.route('/sign', methods=['GET', 'POST'])
+async def sign():
     if request.method == 'POST':
         email_telephone = request.form.get('email_telephone')
         password = str(request.form.get('password'))
         user = User.query.filter(or_(func.lower(User.email) == func.lower(email_telephone), User.telephone == email_telephone)).first()
-    
+
         if user:
-            session['user_id'] = user.id
+            session['user_id'] = user.id  # Сохраняем ID пользователя в сессии
             if check_password_hash(user.password, password):
-                login_user(user) 
-                return redirect(url_for('views.me', user = current_user))
+                login_user(user, remember=True)  # Запоминаем пользователя
+                return redirect(url_for('views.chats'))
             else:
-                return 'Не правильный пароль'
+                return 'Неправильный пароль'
         else:
             return 'Почта/телефон либо пароль указаны с ошибкой'
-        
 
+        
 def add_member_to_server(user_id, server_id):
     user = User.query.get(user_id)
     server = Server.query.get(server_id)
@@ -128,3 +122,62 @@ async def create_server():
         db.session.commit()
 
         return redirect(url_for('views.me', user = current_user))
+
+
+@auth.route('/create_chat', methods = ['POST'])
+async def create_chat():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        new_chat = Chat(
+            name = name,
+            user_id = current_user.id
+        )
+        db.session.add(new_chat)
+        db.session.commit()
+
+        new_message = Chat_message(
+            chat_id = new_chat.id,
+            user_id = current_user.id,
+            content = '..., здравствуйте! Задайте интересующий вас вопрос',
+
+        )
+        db.session.add(new_message)
+        db.session.commit()
+
+
+        return redirect(url_for('views.chats', current_user = current_user))
+
+
+from .ai import start_chat, send_message
+
+@auth.route('/chats/<int:id>', methods=['GET', 'POST'])
+@login_required
+def chats_id(id):
+    chats = Chat.query.filter_by(user_id=current_user.id).all()
+    messages = Chat_message.query.filter_by(chat_id=id).order_by(Chat_message.timestamp.asc()).all()
+
+    if request.method == 'POST':
+        user_input = request.form.get('message')
+        if user_input:
+            chat_session_db = Chat.query.filter_by(id=id, user_id=current_user.id).first()
+            if not chat_session_db:
+                flash("Чат не найден.", "error")
+                return redirect(url_for('auth.chats_id', id=id))
+
+            # Сохраняем сообщение пользователя
+            user_message = Chat_message(chat_id=id, user_id=current_user.id, content=user_input)
+            db.session.add(user_message)
+            db.session.commit()
+
+            # Отправка в нейросеть
+            chat_session = start_chat()
+            model_response = send_message(chat_session, user_input)
+
+            # Сохраняем ответ нейросети
+            bot_message = Chat_message(chat_id=id, user_id=None, content=model_response)  # user_id=None для бота
+            db.session.add(bot_message)
+            db.session.commit()
+
+            return redirect(url_for('auth.chats_id', id=id))
+
+    return render_template('chats.html', current_user=current_user, chats=chats, messages=messages)
