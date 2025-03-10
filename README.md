@@ -1,17 +1,17 @@
-# dewiar-ai-main
+# dsv2
 Try to make ds version 2.0
 
-## Требования
+## Requirements
 
 - python 3.10.0
 
-## Установка
+## Installation
 
-- клонировать репозиторий dewiar-ai-main
-- создать виртуальное окружение `python -m venv .venv`
-- активировать виртуальное окружение `.venv\Scripts\activate`
-- установить библиотеки `pip install -r requirements.txt`
+- clone the dsv2 repository
+- create a virtual environment `python -m venv .venv`
+- activate the virtual environment `.venv\Scripts\activate`
+- install the libraries `pip install -r requirements.txt `
 
-## Запуск
+## Launch
 
-- запустить проект `py main.py`
+- `py main.py`
