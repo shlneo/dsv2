@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call Room with Screen Sharing</title>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Video Call with Screen Sharing</h1>
+    <div>
+        <video id="localVideo" autoplay playsinline></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+    
+    <button id="joinRoom">Join Room</button>
+    <button id="shareScreen">Share Screen</button>
+
+    <script>
+        const socket = io.connect('http://127.0.0.1:5000/chat');
+        let localStream;
+        let screenStream;
+        let peerConnections = {};  // Храним подключения для всех пользователей комнаты
+        const config = {
+            'iceServers': [{'urls': 'stun:stun.l.google.com:19302'}]
+        };
+
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+        const joinButton = document.getElementById('joinRoom');
+        const shareScreenButton = document.getElementById('shareScreen');
+        let room;
+
+        // Запрос доступа к камере и микрофону
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+            .then(stream => {
+                localVideo.srcObject = stream;
+                localStream = stream;
+            }).catch(error => {
+                console.error('Error accessing media devices.', error);
+            });
+
+        // Подключение к комнате
+        joinButton.onclick = () => {
+            room = prompt("Enter room name:");
+            const username = prompt("Enter your username:");
+            
+            socket.emit('join', {username, room});
+            
+            socket.on('join_room_announcement', data => {
+                console.log(data.message);
+            });
+
+            // Инициализация WebRTC соединений для каждого участника
+            socket.on('users_in_room', (users) => {
+                users.forEach(user => {
+                    if (!peerConnections[user]) {
+                        startWebRTCConnection(user);
+                    }
+                });
+            });
+
+            // Инициализация для вновь присоединившегося пользователя
+            socket.on('new_user', (userId) => {
+                if (!peerConnections[userId]) {
+                    startWebRTCConnection(userId);
+                }
+            });
+        };
+
+        // Обработчик демонстрации экрана
+        shareScreenButton.onclick = () => {
+            navigator.mediaDevices.getDisplayMedia({ video: true }).then(screenStream => {
+                // Отправляем экранный поток всем участникам
+                screenStream.getTracks().forEach(track => {
+                    for (let userId in peerConnections) {
+                        peerConnections[userId].addTrack(track, screenStream);
+                    }
+                });
+
+                // Показываем экранный поток на стороне отправителя
+                localVideo.srcObject = screenStream;
+
+                screenStream.getVideoTracks()[0].onended = () => {
+                    console.log('Screen sharing stopped');
+                };
+            }).catch(error => {
+                console.error('Error accessing display media.', error);
+            });
+        };
+
+        // Установление WebRTC соединения
+        function startWebRTCConnection(userId) {
+            const peerConnection = new RTCPeerConnection(config);
+            peerConnections[userId] = peerConnection;
+
+            // Добавляем локальный поток в WebRTC соединение
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+
+            // Обрабатываем входящие потоки от других участников
+            peerConnection.ontrack = (event) => {
+                remoteVideo.srcObject = event.streams[0];
+            };
+
+            // ICE-кандидаты для установления связи
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    socket.emit('candidate', {candidate: event.candidate, room: room, userId: userId});
+                }
+            };
+
+            // Создание SDP предложения
+            peerConnection.createOffer().then(offer => {
+                return peerConnection.setLocalDescription(offer);
+            }).then(() => {
+                socket.emit('offer', {offer: peerConnection.localDescription, room: room, userId: userId});
+            });
+
+            // Обработка входящих SDP предложений
+            socket.on('offer', (data) => {
+                if (data.userId === userId) {
+                    peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+                    peerConnection.createAnswer().then(answer => {
+                        return peerConnection.setLocalDescription(answer);
+                    }).then(() => {
+                        socket.emit('answer', {answer: peerConnection.localDescription, room: room, userId: userId});
+                    });
+                }
+            });
+
+            // Обработка ответов на предложение
+            socket.on('answer', (data) => {
+                if (data.userId === userId) {
+                    peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+                }
+            });
+
+            // Обработка входящих ICE-кандидатов
+            socket.on('candidate', (data) => {
+                if (data.userId === userId && data.candidate) {
+                    peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                }
+            });
+        }
+    </script>
+</body>
+</html>

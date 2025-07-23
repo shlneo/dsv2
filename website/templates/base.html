@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    
+    <title>{% block title %}Ai{% endblock %}</title>
+  </head>
+  <body>  
+    <header> 
+    </header>
+    <main> 
+
+    {% block content %} 
+    {% endblock %}
+
+    {% block javascript %}
+    {% endblock %}
+
+    </main>
+    <footer>
+      
+    </footer>
+  </body> 
+</html>

@@ -1,0 +1,108 @@
+{% extends "intrerf.html" %}
+
+{% block content %}
+
+<div class="right_of_serverheader">
+    <div class="top_header">
+        <div class="top_header_left">
+            <a>{{current_server.name}}</a>
+        </div>
+    </div>    
+    <div class="pod_topheader">
+        <div class="chats_header">
+            <div class="dop_chats_header">
+
+            </div>
+            <div class="personal_chats_list">
+                <div class = "dop_chat">
+                    {%for i in channelsText%}
+                        <a>{{i.name}}</a>
+                    {%endfor%}
+                </div>
+
+                <div class="dop_chat">
+                    {%for i in channelsVoice%}
+                        <a class="roomButton" data-room="{{i.id}}">{{i.name}}</a>
+                        <div class="user-list">
+                            <ul id="participants-{{i.id}}">
+                                
+                            </ul>
+                        </div>
+                    {%endfor%}   
+                </div>
+            </div>
+            <div class="mainPrivileges">
+                <div class="acc_info">
+                    <div class="img_acc_info">
+                        <img  class = "" src="{{ url_for('static', filename='img/menu.png')}}" alt="us">
+                    </div>
+                    <div class="acc_type">
+                        <a href="">{{current_user.name}}</a>
+                        <a href="">В сети</a>
+                    </div>
+
+                </div>
+                <div class="privileges_info">
+                    <a>Выйти</a>
+             
+                </div>
+                <div>
+                    
+                </div>
+            </div>  
+        </div>
+        <div class="mes_area">
+            
+        </div>
+        <div class="dop_info_area">
+            
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+
+
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>
+    const socket = io(); 
+    const user = "{{current_user.name}}";
+    const userRooms = new Set(); 
+    
+    document.querySelectorAll('.roomButton').forEach(button => {
+        button.addEventListener('click', () => {
+            const roomName = button.getAttribute('data-room');
+    
+            if (!userRooms.has(roomName)) {
+                socket.emit('join', {user, room: roomName});
+                userRooms.add(roomName);
+                console.log(`${user} присоединился к комнате ${roomName}`);
+    
+                socket.emit('get_room_participants', {room: roomName});
+            }
+        });
+    });
+    
+    socket.on('room_participants', (data) => {
+        const roomName = data.room;
+        const participants = data.participants;
+    
+        const participantsList = document.getElementById(`participants-${roomName}`);
+        if (participantsList) {
+            participantsList.innerHTML = '';  // Очищаем текущий список
+            participants.forEach(participant => {
+                const li = document.createElement('li');
+                li.textContent = participant;
+                participantsList.appendChild(li);  // Добавляем нового участника в список
+            });
+        }
+    });
+
+</script>
+
+
+{% endblock %}

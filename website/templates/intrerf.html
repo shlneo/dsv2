@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    
+    <title>{% block title %}Ai{% endblock %}</title>
+  </head>
+  <body>  
+    <header> 
+    </header>
+    <main> 
+      <div class="ds_area">
+        <div class="server_header">
+            <div class="privat_message_button">
+                <a href="/servers/@me">{{current_user.name[0]}}</a>
+            </div>
+
+            <div class="chats_message_button">
+                <a href="/chats">Ch</a>
+            </div>
+
+            <div class="logout_button">
+                <a href="/logout"></a>
+            </div>
+    
+            {%for i in servers%}
+                <div class="add_server_button">
+                    <a href="/servers/{{i.id}}">{{i.name[0]}}</a>
+                </div>
+            {%endfor%}
+
+
+
+
+            <div data-show-modal="create_server" class="add_server_button">
+                <a>+</a>
+            </div>
+    
+        </div>
+        {% block content %} 
+
+
+
+
+        {% endblock %}
+    
+ 
+        <div id="create_server" class="modal" data-modal="create_server">
+            <div class="modalBox" data-modal-box>
+                <a class="modalClose" data-close-modal>&times;</a>
+
+                <div class="modalStep step1 active">
+                    <div class="modalHeader">
+                        <div class="modalHeaderName">
+                            <a>Создайте свой сервер</a>
+                        </div>
+                    </div>
+                    <div class="modalMiddle">
+                        <div class="patternbutton" data-choose-template>
+                            <div class="left">
+                                <a>Свой шаблон</a>
+                            </div>
+                            <div class="right">
+                                <a></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modalBottom">
+                        <div class="modalBottomName">
+                            <a>У вас уже есть приглашение?</a>
+                        </div>
+                        <a class="modalBottomButton">Присоединиться к серверу</a>
+                    </div>
+                </div>
+
+                <!-- Второй шаг -->
+                <div class="modalStep step2">
+                    <form action="/create_server" method="POST">
+                        <div class="modalHeader">
+                            <div class="modalHeaderName">
+                                <a>Персонализируйте свой сервер</a>
+                            </div>
+                        </div>
+                        <div class="modalMiddle">
+                            <p>Название сервера</p>
+                            <input type="text" name="name" value="Сервер {{current_user.name}}">
+                        </div>
+                        <div class="modalBottom">
+                            <div class="modalBottomContent">
+                                <a data-back>Назад</a>
+                                <button type="submit" class="modalBottomButton" style="width: 100px;">Создать</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    
+
+
+
+
+    {% block javascript %}
+        <script>
+
+        </script>    
+        <script src="{{ url_for('static', filename='js/chats.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/baseadap.js') }}"></script>
+    {% endblock %}
+
+
+    </main>
+    <footer>
+      
+    </footer>
+  </body> 
+</html>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="backimg"></div>
+
+<div class="login_page">
+    <div class = "login_contener">
+        <form class="log_form" action = "/sign" method="POST">
+            <div class="left">
+                <div class="upper">
+
+                </div>
+                <div class="center">
+                    <p>Адрес электронной почты или номер телефона *</p>
+                    <input type="email" name = "email_telephone">
+                    <p>Пароль *</p>
+                    <input type="password" name = "password">
+                    <form action= "/relod_password" method="POST">
+                        <div class = "forgot_cont">
+                            <input   
+                                type="hidden"
+                                class="form-control"
+                                id="email_relod"
+                                name="email_relod" 
+                                value = ""
+                                readonly
+                                >
+                            <button class = 'relod_button' type="submit">Забыли пароль?</button>
+                        </div>
+                    </form>
+
+                    <button type = "submit" class = "log_button">Вход</button>
+                    <div class = "forgot_cont">
+                        <span>Нужна учетная запись?</span>
+                        <a class = 'relod_button' href = "/sign">Зарегистрироваться</a>
+                    </div>
+                </div>
+                <div class="down">
+                    
+
+
+                </div>
+            </div>
+            <div class="right">
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const emailField = document.getElementById('email');
+        const relodEmailField = document.getElementById('email_relod');
+
+        emailField.addEventListener('input', function() {
+            relodEmailField.value = emailField.value;
+        });
+    });
+</script>
+{% endblock %}

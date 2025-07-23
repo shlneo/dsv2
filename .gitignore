@@ -1,0 +1,6 @@
+venv
+.venv
+api.py
+database.db
+__pycache__
+website/.env

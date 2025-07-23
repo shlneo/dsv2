@@ -1,0 +1,713 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat';
+    /* font-family: "PT Sans", sans-serif; */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    
+}
+
+body {
+    overflow-x: hidden;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+:root {
+    --perple: rgb(101, 91, 255);
+    --perple_hover: rgb(75, 62, 255);
+    --greyfon: rgb(53, 53, 53);
+    --greyfon2: rgb(44, 44, 44);
+    --greyfonhover: rgb(70, 70, 70);
+    --greyfontext1: rgb(187, 187, 187);
+    --greyfontext2: rgb(211, 211, 211);
+    --greyborder: rgb(109, 109, 109);
+    --chatsback: rgb(46, 46, 46);
+}
+
+
+/* login page */
+
+.backimg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 1;
+    background-image: url('../img/blue-cover1.jpg');
+    
+    
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+.login_page{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login_contener{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+}
+
+.log_form {
+    background: rgb(56, 56, 56);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex; 
+    flex-direction: column;
+   
+   
+    padding: 30px;    
+    border-radius: 5px;
+}
+
+.log_form .center{
+
+    display: flex; 
+    flex-direction: column;
+
+}
+
+.log_form .left{
+    display: flex; 
+    flex-direction: row;
+
+    font-size: 12px;
+    font-weight: 600;
+    color: rgb(187, 187, 187);
+}
+
+.log_form .left p{
+    text-transform: uppercase;
+    padding-bottom: 7px;
+    padding-top: 12px;
+    
+}
+
+.log_form .left a{
+    font-weight: 500;
+    cursor: pointer;
+
+
+}
+
+.log_form .left input{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(36, 36, 36);
+    padding: 10px 12px;
+    outline: none;
+    width: 376px;
+    color: rgb(221, 221, 221);
+    font-weight: 500;
+}
+
+
+.log_form .left .log_button{
+    margin-top: 15px;
+    margin-bottom: 7px;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(101, 91, 255);
+    padding: 10px 12px;
+    outline: none;
+    width: 400px;
+    font-size: 14px;
+    color: rgb(221, 221, 221);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.log_form .left .log_button:hover{
+    background-color: rgb(75, 62, 255);
+}
+
+.relod_button{
+    background-color: transparent;
+    padding: 0;
+    margin-top: 10px;
+    border: none;
+    color: #00c3ff;
+    transition: color 0.3s ease;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.relod_button:hover{
+    color: rgb(255, 255, 255);
+}
+
+/*sign*/
+
+.birthdata_reg{
+    display: flex;
+    flex-direction: row;
+}
+
+.birthdata_reg select {
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(36, 36, 36);
+    padding: 10px 12px;
+    outline: none;
+    width: 120px;
+    margin-right: 10px;
+    color: rgb(133, 133, 133);
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+
+}
+
+.birthdata_reg select:focus {
+    background-color: rgb(46, 46, 46);
+    overflow-y: auto;
+}
+
+.birthdata_reg section {
+    position: relative;
+}
+
+.ds_area{
+    display: flex;
+    flex-direction: row;
+}
+
+/* server_header */
+
+.server_header{
+    width: 70px;
+    min-height: 100vh;
+    background-color:rgb(36, 36, 36);
+    display: flex;
+    flex-direction: column;
+}
+
+.privat_message_button,
+.logout_button,
+.chats_message_button{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.privat_message_button a{
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.chats_message_button a{
+    background-color: rgb(0, 255, 191);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+
+
+.logout_button a{
+    background-color: rgb(226, 43, 43);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 60px;
+}
+
+.add_server_button{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.add_server_button a{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 35px;
+    color: rgb(0, 168, 22);
+    background-color: rgb(75, 75, 75);
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    transition: background 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
+    cursor: pointer;
+}
+
+
+.add_server_button a:hover{
+    border-radius: 10px;
+    background-color: rgb(0, 168, 22);
+    color: white;
+}
+
+.right_of_serverheader{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.top_header{
+    height: 50px;
+    top: 0;
+    width: 100%;
+    background-color:rgb(53, 53, 53);
+    z-index: 1;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.top_header_left{
+    height: 100%;
+    width: 300px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color:var(--chatsback);
+}
+
+.top_header_left input{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(36, 36, 36);
+    padding: 10px 12px;
+    margin: 5px 10px;
+    outline: none;
+    width: calc(100% - 46px);
+    color: rgb(221, 221, 221);
+    font-weight: 500;
+}
+
+
+
+.pod_topheader{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.chats_header{
+    min-height: calc(100vh-50px);
+    top: 0;
+    width: 300px;
+    background-color:var(--chatsback);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dop_chats_header{
+    height: 170px;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.dop_chat{
+    display: flex;
+    flex-direction: column;
+    width: calc(100%);
+    margin-bottom: 20px;
+}
+
+
+.dop_chat a {
+    margin: 5px;
+    padding: 14px;
+    padding-left: 20px;
+    text-decoration: none;
+    color: var(--greyfontext1);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dop_chat a:hover{
+    background-color: var(--greyborder);
+    color: white;
+}
+
+.personal_chats_list{
+    height: calc(100% - 220px);
+
+}
+
+.mainPrivileges{
+    
+    position: relative;
+    width: calc(100% - 20px);
+    height: fit-content;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(41, 41, 41);
+    padding: 10px;
+}
+
+.acc_info{
+    display: flex;
+}
+
+.privileges_info{
+    display: flex;
+}
+
+.acc_type{
+    display: flex;
+    flex-direction: column;
+}
+
+.acc_type a:first-child{
+    color: white;
+    font-size: 12px;
+   
+}
+
+.acc_type a:last-child{
+    color: var(--greyfontext1);
+    font-size: 10px;
+}
+
+.mes_area{
+    min-height: calc(100vh-50px);
+    top: 0;
+    width: calc(100% - 300px - 300px);
+    background-color:rgb(53, 53, 53);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.mes_area_header{
+
+}
+
+.mes_area_body{
+
+}
+
+.mes_area_body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    max-height: 700px; 
+    overflow-y: auto;
+   
+    border-radius: 10px;
+}
+
+.message_oval {
+    max-width: 70%;
+    color: rgb(223, 223, 223);
+    padding: 10px 15px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.4;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-message {
+    align-self: flex-start;
+    background-color: rgba(150, 150, 150, 0.5);
+    border: none;
+}
+
+.bot-message {
+    align-self: flex-end;
+    background: #007bff;
+    color: white;
+}
+
+
+
+
+
+.mes_area_footer form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 20px;
+}
+
+.text_send_mes{
+    width: calc(100% - 40px);
+    border-radius: 10px;
+    margin: 0 20px;
+    margin-left: 0;
+    background-color: rgba(150, 150, 150, 0.5);
+    color: rgb(206, 206, 206);
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+}
+
+.but_kvadro{
+    width: 50px;
+    height: 50px;
+    background-color: blueviolet; 
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.but_kvadro img{
+    width: 40px;
+    height: 40px;
+}
+
+
+.dop_info_area{
+    min-height: calc(100vh-50px);
+    top: 0;
+    width:  300px;
+    background-color:rgb(39, 39, 39);
+}
+
+/*modal*/
+
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;  
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modalClose{
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: top;
+    font-size: 45px;
+    cursor: pointer;
+    font-weight: 200;
+    transition: color 0.2s;
+    z-index: 2;
+}
+
+.modalClose:hover{
+    color: white;
+}
+
+.modalStep {
+    display: none;
+    opacity: 0;
+    transform: translateX(100%); /* Начальная позиция справа (невидима) */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Переходы для плавного появления и перемещения */
+}
+
+.modalStep.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0); /* Элемент плавно выдвигается на место */
+}
+
+.modalBox {
+    border-radius: 5px;
+    position: absolute;
+    width: 400px;
+    /* height: 495px; */
+    /* top: calc(50%);
+    left: calc(50%); */
+    margin: 15% auto;    
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    cursor: default;
+
+    position: relative;
+
+
+    color: var(--greyfontext1);
+    background-color: var(--greyfon);
+
+    opacity: 0;
+    transform: scale(0.8); 
+    transition: opacity 0.3s ease, transform 0.2s ease, width 0.2s ease;
+}
+
+.modal.active .modalBox {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modalHeader{
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    padding: 35px 20px 30px 20px;
+
+}
+
+.modalHeaderName{
+    font-size: 20px;
+    text-align: center;
+    color: var(--greyfontext2);
+}
+
+
+.modalMiddle{
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    align-items: left;
+}
+
+.modalMiddle p{
+    text-transform: uppercase;
+    padding-bottom: 7px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.modalMiddle input{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(36, 36, 36);
+    padding: 10px 12px;
+    outline: none;
+    width: calc(100% - 26px);
+    color: rgb(221, 221, 221);
+    font-weight: 500;
+}
+
+.patternbutton{
+    border-radius: 5px;
+    border: 1px solid var(--greyborder);
+    width: calc(100% - 20px);
+    padding: 15px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.patternbutton:hover{
+    background-color: var(--greyfonhover);
+
+}
+
+.patternbutton .left,
+.patternbutton .right{
+    font-weight: 500;
+}
+
+.modalBottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: var(--greyfon2);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.modalBottomContent{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modalBottomName{
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.modalBottomButton{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(101, 91, 255);
+    padding: 10px 12px;
+    outline: none;
+    width: calc(100% - 26px); 
+    font-size: 13px;
+    color: rgb(221, 221, 221);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.modalBottomButton:hover{
+    background-color: rgb(75, 62, 255);
+}
+
+#back-btn{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#back-btn{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.modalBottomName{
+    font-size: 15px;
+    color: var(--greyfontext2);
+    font-weight: 15px;
+}
